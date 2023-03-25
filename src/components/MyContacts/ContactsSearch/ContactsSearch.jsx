@@ -1,14 +1,13 @@
 import css from './ContactsSearch.module.css';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { setQuery } from 'redux/contactsSlice';
+import { setFilterValue, getFilterValue } from 'redux/filterSlice';
 
 const ContactsSearch = () => {
   const dispatch = useDispatch();
-  const query = useSelector(state => state.contacts.query);
+  const filterValue = useSelector(getFilterValue);
 
-  const onQueryChange = query => {
-    dispatch(setQuery(query));
+  const onChange = e => {
+    dispatch(setFilterValue(e.currentTarget.value));
   };
 
   return (
@@ -18,8 +17,8 @@ const ContactsSearch = () => {
         className={css.input}
         type="text"
         name="filter"
-        value={query}
-        onChange={e => onQueryChange(e.target.value)}
+        value={filterValue}
+        onChange={onChange}
         placeholder="Enter name"
       />
     </div>
@@ -27,7 +26,3 @@ const ContactsSearch = () => {
 };
 
 export default ContactsSearch;
-
-ContactsSearch.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-};
